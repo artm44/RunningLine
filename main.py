@@ -1,33 +1,48 @@
-from moviepy.editor import *
+import cv2
 import numpy as np
 
 
 # Функция для создания видео с бегущей строкой текста
-def create_running_text_video(text, duration, output_path):
-    # Создаем функцию, которая возвращает изображение с текстом в нужной позиции
-    def make_frame(t):
-        # Инициализируем изображение с черным фоном
-        img = np.zeros((720, 1280, 3), dtype=np.uint8)
+def create_running_text_video(text: str, output_path: str, duration: int = 4):
+    # Создаем видео запись
+    width, height = 80, 80
+    fps = 24
+    fourcc = cv2.VideoWriter_fourcc(*'mp4v')
+    out = cv2.VideoWriter(output_path, fourcc, fps, (width, height))
+
+    # Инициализируем начальные параметры для бегущей строки
+    font = cv2.FONT_HERSHEY_COMPLEX
+    font_scale = 2
+    font_thickness = 2
+    text_width, text_height = cv2.getTextSize(text, font, font_scale, font_thickness)[0]
+    offset = (height - text_height) // 2
+    y_position = height - offset
+    background_colour = [125, 30, 80]  # Цвет фона
+
+    # Создаем видео
+    for t in np.linspace(0, duration, int(duration * fps)):
+        frame = np.full((height, width, 3), background_colour, dtype=np.uint8)
 
         # Вычисляем текущую позицию текста на основе времени
-        x_position = int((1280 + len(text) * 20) * t / duration)
+        x_position = width // 2 - int(text_width * t / duration)
 
-        # Рисуем текст на изображении
-        txt_clip = TextClip(text, fontsize=70, color='white', bg_color='black').set_position((x_position, 300))
+        # Рисуем текст на кадре
+        cv2.putText(frame, text, (x_position, y_position), font, font_scale, (255, 255, 255), font_thickness)
 
-        # Возвращаем изображение с текстом
-        return CompositeVideoClip([txt_clip]).get_frame(t)
+        # Добавляем кадр в видео запись
+        out.write(frame)
 
-    # Создаем видео с помощью функции make_frame
-    video = VideoClip(make_frame, duration=duration)
-
-    # Сохраняем видео
-    video.write_videofile(output_path, fps=24)
+    # Закрываем видео запись
+    out.release()
 
 
-# Пример использования
-text = "Это текст для бегущей строки"
-duration = 10  # длительность видео в секундах
-output_path = "running_text.mp4"
-create_running_text_video(text, duration, output_path)
+def main():
+    # Пример использования
+    text = input('Введите текст')
+    duration = 4  # длительность видео в секундах
+    output_path = "videos/my_video.mp4"
+    create_running_text_video(text, output_path, duration)
 
+
+if __name__ == '__main__':
+    main()
