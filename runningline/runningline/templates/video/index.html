@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Бегущая строка</title>
+</head>
+<body>
+    <h2>Введите текст</h2>
+    <form action="{% url 'run_text' %}" method="get">
+        <input type="text" name="text">
+        <input type="submit" value="Создать видео">
+    </form>
+</body>
+</html>

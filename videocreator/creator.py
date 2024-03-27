@@ -40,7 +40,7 @@ def main():
     # Пример использования
     text = input('Введите текст\n')
     duration = 4  # длительность видео в секундах
-    output_path = "videos/my_video.mp4"
+    output_path = "../videos/my_video.mp4"
     create_running_text_video(text, output_path, duration)
 
 
