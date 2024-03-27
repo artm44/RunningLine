@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
+from django.utils import timezone
 
+from .models import RequestLog
 from videocreator.creator import create_running_text_video
 # Create your views here.
 
@@ -11,6 +13,8 @@ def index(request):
 
 def run_text(request):
     text = request.GET.get('text', '')
+    log = RequestLog(text=text, date=timezone.now())
+    log.save()
     if text:
         # Создаем видео с текстом
         duration = 4  # длительность видео в секундах
