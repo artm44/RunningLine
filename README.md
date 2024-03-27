@@ -16,5 +16,6 @@ RunningLine - это Django приложения для создания бег�
 - На Windows: `venv\Scripts\activate`
 - На Linux/Mac: `source venv/bin/activate`
 4. Установите зависимости: `pip install -r requirements.txt`
-5. Перейдите в католог приложения: `cd runningline`
-6. Запустите приложение: `python manage.py runserver`
+5. Перейдите в каталог приложения: `cd runningline`
+6. Произведите миграцию БД: `python manage.py migrate` 
+7. Запустите приложение: `python manage.py runserver`
