@@ -25,3 +25,4 @@ def run_text(request):
             response = HttpResponse(f.read(), content_type='video/mp4')
             response['Content-Disposition'] = 'attachment; filename="video.mp4"'
         return response
+    return redirect('index')
