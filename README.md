@@ -10,7 +10,7 @@ RunningLine - это Django приложения для создания бег�
 - **Создание видео:** OpenCV 
 
 ## Установка
-1. Клонируйте репозиторий: `git clone https://github.com/artm44/RunningLine.git#django-app`
+1. Клонируйте репозиторий: `git clone --branch=django-app https://github.com/artm44/RunningLine.git`
 2. Создайте виртуальное окружение: `python -m venv venv`
 3. Активируйте виртуальное окружение:
 - На Windows: `venv\Scripts\activate`
